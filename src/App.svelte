@@ -1,13 +1,28 @@
 <script>
 	import WorkoutList from './WorkoutList.svelte';
 	import Dashboard from './Dashboard.svelte';
-
+	let start = new Audio('audio/start.wav'); // buffers automatically when created
+	let start_interval = new Audio('audio/start_interval.wav');
+	let end_interval = new Audio('audio/end_interval.wav');
+	let left_on = new Audio('audio/left_on.wav');
+	let right_rest = new Audio('audio/right_rest.wav');
+	// SFX: Seconds, end 
 	let workout = [{
-		name: 'Get Stretchy',
-		duration: 3
+		name: 'Shoulder Blade Squeezes',
+		duration: 5,
+		rest: 2,
+		reps: 3,
 	},{
-		name: 'Forward Fold',
-		duration: 5
+		name: 'Hang on top of Doorjamb',
+		duration: 15,
+		rest: 3, 
+		reps: 2
+	},{
+		name: 'Hang on side of Doorjamb',
+		duration: 15,
+		rest: 3, 
+		reps: 2
+		// TODO: SIDES
 	}]
 	let restDuration = 3;
 
@@ -22,19 +37,17 @@
 		// nextName: "",
 	}
 		// up next, total reps, name
-		
+
 	function startWorkout(){
+		start.play();
 		currentWorkout = {}
 		currentWorkout.index = 0;
+		currentWorkout.rep = 1;
 		currentWorkout.isTransitioning = true;
+		currentWorkout.isResting = false;
 		setTimer(restDuration);
-		// loadWorkoutData(workout);
 	}
-	function loadWorkoutData(workoutData){ 
-		// let i = currentWorkout.index; 
-		// currentWorkout.name = workoutData[i].name 
-		// currentWorkout.secondsRemaining = workoutData[i].duration
-	}
+
 
 	let timer;
 	function setTimer(seconds) {
@@ -49,18 +62,40 @@
 	}
 
 	function advanceWorkout() {
-		if (currentWorkout.isTransitioning == true) {
+		if (currentWorkout.isTransitioning == true) { // End the Rest Transition
 			currentWorkout.isTransitioning = false;
+			currentWorkout.rep = 1;
+			start_interval.play();
 			setTimer(workout[currentWorkout.index].duration);
-		} else if (currentWorkout.isTransitioning == false) {
-			if (workout[currentWorkout.index+1]) {
-				currentWorkout.isTransitioning = true; 
-				currentWorkout.index ++;
-				setTimer(restDuration);
+		} else if (currentWorkout.isTransitioning == false) { // Just ended a rep or rest
+			
+			if ((workout[currentWorkout.index].reps) && 
+			   (currentWorkout.rep < workout[currentWorkout.index].reps) &&
+			   (currentWorkout.isResting == false)) { // we just finished one rep
+			   		setTimer(workout[currentWorkout.index].rest);
+					right_rest.play();
+					currentWorkout.isResting = true;
+			} else if ((workout[currentWorkout.index].reps) && 
+			   (currentWorkout.rep < workout[currentWorkout.index].reps) &&
+			   (currentWorkout.isResting == true)) { // we just finished resting and have more reps
+					setTimer(workout[currentWorkout.index].duration);
+					left_on.play();
+					currentWorkout.isResting = false; 
+					currentWorkout.rep ++;
+			}  else { // we are done with reps and or the exercise
+
+				if (workout[currentWorkout.index+1]) { 
+					currentWorkout.isTransitioning = true; 
+					currentWorkout.index ++;
+					end_interval.play();
+					setTimer(restDuration);
+				}
+				else {
+					currentWorkout.isFinished = true;
+					start.play();
+				}
 			}
-			else {
-				currentWorkout.isFinished = true;
-			}
+
 		}
 	
 	}
@@ -83,77 +118,34 @@
 			{workout[currentWorkout.index].name}
 	    {:else if (currentWorkout.index > 0 && currentWorkout.isTransitioning == true)}
 			rest
-
 		{/if} 
 	</svelte:fragment>
+	<svelte:fragment slot="reps"> 
+		{#if (currentWorkout.index >= 0)} 
+			{#if (workout[currentWorkout.index].reps)}
+				{currentWorkout.rep} / {workout[currentWorkout.index].reps}
+			{/if}
+		{/if}
+	</svelte:fragment>
+	<svelte:fragment slot="go-rest"> 
+		{#if (currentWorkout.index >= 0)} 
+			{#if (workout[currentWorkout.index].reps && (currentWorkout.isTransitioning == false))}
+				{#if currentWorkout.isResting} 
+					rest
+				{:else}
+					go!
+				{/if}
+			{/if}
+		{/if}
+	</svelte:fragment>
 	<svelte:fragment slot="timer">{currentWorkout.secondsRemaining ? currentWorkout.secondsRemaining : 0 }</svelte:fragment>
+	<svelte:fragment slot="next">
+		{#if (currentWorkout.index == 0 && currentWorkout.isTransitioning == true)} 
+			{workout[currentWorkout.index].name}
+		{:else}
+			{ workout[currentWorkout.index+1] ? workout[currentWorkout.index+1].name : "" }
+		{/if}		
+	</svelte:fragment>
 
 	
 </Dashboard>
-
-<!-- <script>
-	let workout = [{
-		name: 'Get Stretchy',
-		duration: 3
-	},{
-		name: 'Forward Fold',
-		duration: 5
-	}]
-
-	let workoutIndex = 0;
-	let resting = false;
-	let countdown = 0;
-	let restTime = 3;
-	let name, secondsRemaining
-
-	
-
-
-
-	function runWorkout() {
-		if (workout[workoutIndex]) {
-			name = workout[workoutIndex].name;
-			secondsRemaining = workout[workoutIndex].duration;
-			countdown = setInterval(function(){
-			if (secondsRemaining > 1) {
-				secondsRemaining -= 1;
-			} else {
-				if (resting == false) {
-					resting = true;
-					secondsRemaining = restTime; 
-				} else {
-					clearInterval(countdown);
-					resting = false;
-					secondsRemaining = 0;
-					workoutIndex++;
-					runWorkout();
-				}
-			}
-			}, 1000);
-		} else {
-			name = "done";
-		}
-	}
-</script>
-
-	<button on:click={() => runWorkout()}> Start Workout </button>
-	 
-
-	<p>{name ? name : ""}</p>
-	<p>{secondsRemaining} </p> -->
-
-	<!-- {seconds === 1 ? 'second' : 'seconds'} -->
-
-
- <!-- 
-{ 
-	name: "Side Plank",
-	duration: {'on': 10, 'rest': 3},
-	repeat: 8,
-	sides: 2
-}, 
-{
-	name: 'Forward Fold',
-	duration: 20
-}
--->
