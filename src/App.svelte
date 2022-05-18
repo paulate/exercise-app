@@ -1,31 +1,243 @@
 <script>
 	import WorkoutList from './WorkoutList.svelte';
 	import Dashboard from './Dashboard.svelte';
+
+	// SFX
+	//TODO: audio not working on ios
 	let start = new Audio('audio/start.wav'); // buffers automatically when created
 	let start_interval = new Audio('audio/start_interval.wav');
 	let end_interval = new Audio('audio/end_interval.wav');
 	let left_on = new Audio('audio/left_on.wav');
 	let right_rest = new Audio('audio/right_rest.wav');
-	// SFX: Seconds, end 
-	let workout = [{
+
+	
+	// Workout data
+	// todo: select workouts
+	// todo: make sure "next up" shows right thing when resting
+	// todo: bug - sometimes resting shows 10/20 reps? 
+	let workout = [];
+	let workout00 = [{
+		name:'Calf Stretch',
+		duration:2,
+		alternating:"reps",
+	},
+	{
+		name:'Forward Fold',
+		duration:2,
+	},
+	{
+		name:'IT Band Stretch',
+		duration:2,
+		alternating:"reps",
+	},
+	{
+		name:'Inner Thigh Stretch',
+		duration:2,
+		alternating:"reps",
+	},
+	// {
+	// 	name:'Pretzel Stretch',
+	// 	duration:2,
+	// 	alternating:"reps",
+	// },
+	// {
+	// 	name:'Neck Stretch',
+	// 	duration:2,
+	// },{
+	// 	name:'Leg Hold Stretch',
+	// 	duration:2,
+	// 	reps:2,
+	// 	alternating:"reps",
+	// },{
+	// 	name:'Pigeon Stretch',
+	// 	duration:2,
+	// 	reps:2,
+	// 	alternating:"reps",
+	// },{
+	// 	name:'Leg Rocks',
+	// 	duration:2,
+	// 	reps:10,
+	// 	alternating:"reps",
+	// },
+]
+	let workout0 = [{
+		name: 'Get ur resistance bands',
+		duration: 30,	
+	},{
 		name: 'Shoulder Blade Squeezes',
 		duration: 5,
 		rest: 2,
-		reps: 3,
+		reps: 10,
 	},{
 		name: 'Hang on top of Doorjamb',
-		duration: 15,
-		rest: 3, 
-		reps: 2
+		duration: 30,
 	},{
 		name: 'Hang on side of Doorjamb',
-		duration: 15,
-		rest: 3, 
-		reps: 2
+		duration:30,
+		// switchSides: "alternating" or "interval"
 		// TODO: SIDES
-	}]
+	},{
+		name: 'Hang on other side of Doorjamb',
+		duration: 30
+		// TODO: SIDES
+	},{
+		name: 'Hand interlock stretch',
+		duration: 15,
+		//sides:2,
+	},{
+		name: 'Hand interlock out stretch',
+		duration: 15,
+		//sides:2,
+	},{
+		name: 'Get ready for some lying down stretches',
+		duration: 10,
+	},{
+		name: 'Side lying thoracic rotation',
+		duration: 5,
+		rest: 5,
+		reps: 5
+		//TODO: reps but no rest (alternating?)	
+		//TODO: sides
+	}, {
+		name: 'Side lying thoracic rotation other side',
+		duration: 5,
+		rest: 5,
+		reps: 5
+		//TODO: reps but no rest (alternating?)	
+		//TODO: sides
+	}, {
+		name: 'Cat Cows',
+		duration: 5,
+		rest: 5,
+		reps: 5
+		//TODO: reps but no rest	
+		//TODO: alternating
+	}, {
+		name: 'Ws',
+		duration:4,
+		rest: 2,
+		reps: 20
+		//TODO: reps but no rest	
+		//TODO: alternating
+	}, {
+		name: 'Snow angels & Squats',
+		duration:5,
+		rest: 3,
+		reps: 20
+		//TODO: reps but no rest	
+		//TODO: alternating
+	} ]
+
+	let workout1 = [ { //TODO: name workouts
+		name: 'Get ur resistance band ready',
+		duration:30,
+
+	},{
+		name: 'Pull in from elbow',
+		duration:5,
+		rest: 3,
+		reps: 15
+		//todo:sides
+	},{ 
+		name: 'Pull out from elbow',
+		duration:5,
+		rest: 3,
+		reps: 15
+	},{ 
+		name: 'Pull in from elbow R',
+		duration:5,
+		rest: 3,
+		reps: 15
+		//todo:sides
+	},{ 
+		name: 'Pull out from elbow R',
+		duration:5,
+		rest: 3,
+		reps: 15
+	},
+
+	]
+
+	let workout2 = [
+		{ 
+		name: 'get ready - lay on ur mat',
+		duration:30,
+	},
+		{ 
+		name: 'Windshield Wipers',
+		duration:60,
+	}, {
+		name: "Up dogs",
+		duration: 30
+	}, {
+		name: "Bridges against the wall",
+		duration: 10,
+		rest: 3,
+		reps:10
+	}, {
+		name: "clamshells w resistance bands",
+		duration:7,
+		rest: 3,
+		reps:10
+	},{
+		name: "clamshells other side",
+		duration:7,
+		rest: 3,
+		reps:10
+	} 
+	]
+
+	let workout3 = [
+		{
+		name: "Ankle Circles",
+		duration: 30,
+		rest: 3,
+		reps:2
+		},{
+		name: "Arch lifts",
+		duration: 5,
+		rest: 3,
+		reps:10
+		},{
+		name: "Toe folds",
+		duration: 20,
+		rest: 3,
+		reps:4
+		},{
+		name: "Heel lifts",
+		duration: 5,
+		rest: 3,
+		reps:20
+		},{
+		name: "Get your resistance band ready",
+		duration: 30
+		},{
+		name: "Resistance band: left",
+		duration: 5,
+		rest: 5,
+		reps:20
+		},{
+		name: "Resistance band: right",
+		duration: 5,
+		rest: 5,
+		reps:20
+		}, {
+		name: "Resistance band: left other foot",
+		duration: 5,
+		rest: 5,
+		reps:20
+		},{
+		name: "Resistance band: right other foot",
+		duration: 5,
+		rest: 5,
+		reps:20
+		}, 
+
+	]
+
 	let restDuration = 3;
 
+	// Current workout data, not sure why I need to make it an object, thought it was tidy
 	$: currentWorkout = {
 		// index: 0,
 		// secondsRemaining: 0,
@@ -35,19 +247,31 @@
 		// isTransitioning:false,
 		// name: "",
 		// nextName: "",
+		// up next, total reps, name <-- all derived from workout
 	}
-		// up next, total reps, name
 
-	function startWorkout(){
+	function startWorkout(wo){
 		start.play();
+		//audio hack to play sounds. 
+		start_interval.muted = true;  
+		end_interval.muted = true;
+		left_on.muted = true;
+		right_rest.muted = true;
+		start_interval.play();
+		end_interval.play();
+		left_on.play();
+		right_rest.play();
+
+		workout = wo;
 		currentWorkout = {}
+		currentWorkout.restDuration = restDuration;
 		currentWorkout.index = 0;
 		currentWorkout.rep = 1;
+		currentWorkout.side = 0;
 		currentWorkout.isTransitioning = true;
 		currentWorkout.isResting = false;
 		setTimer(restDuration);
 	}
-
 
 	let timer;
 	function setTimer(seconds) {
@@ -65,35 +289,66 @@
 		if (currentWorkout.isTransitioning == true) { // End the Rest Transition
 			currentWorkout.isTransitioning = false;
 			currentWorkout.rep = 1;
+			currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
+			start_interval.muted = false;
 			start_interval.play();
 			setTimer(workout[currentWorkout.index].duration);
 		} else if (currentWorkout.isTransitioning == false) { // Just ended a rep or rest
-			
+			console.log(currentWorkout.rep);
 			if ((workout[currentWorkout.index].reps) && 
 			   (currentWorkout.rep < workout[currentWorkout.index].reps) &&
 			   (currentWorkout.isResting == false)) { // we just finished one rep
-			   		setTimer(workout[currentWorkout.index].rest);
-					right_rest.play();
-					currentWorkout.isResting = true;
+					if (workout[currentWorkout.index].alternating == "reps") { //if there are reps and we alternate:rep...
+						console.log ("just finished one rep, move to other side (alt:reps)")
+						setTimer(currentWorkout.restDuration);
+						left_on.muted = false;
+						left_on.play();
+						currentWorkout.side++;
+						if (currentWorkout.side == 2) {
+							currentWorkout.isResting = true;
+						} 
+						console.log(currentWorkout.rep);
+					} else {
+						console.log("just finished one rep, move to resting");
+				   		setTimer(currentWorkout.restDuration);
+						right_rest.muted = false;
+						right_rest.play();
+						currentWorkout.isResting = true;
+					}
 			} else if ((workout[currentWorkout.index].reps) && 
 			   (currentWorkout.rep < workout[currentWorkout.index].reps) &&
 			   (currentWorkout.isResting == true)) { // we just finished resting and have more reps
+				console.log("just finished resting (or alternating rep) and have more reps");
 					setTimer(workout[currentWorkout.index].duration);
+					left_on.muted = false;
 					left_on.play();
 					currentWorkout.isResting = false; 
+					currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
 					currentWorkout.rep ++;
-			}  else { // we are done with reps and or the exercise
-
-				if (workout[currentWorkout.index+1]) { 
-					currentWorkout.isTransitioning = true; 
-					currentWorkout.index ++;
-					end_interval.play();
-					setTimer(restDuration);
-				}
-				else {
-					currentWorkout.isFinished = true;
-					start.play();
-				}
+			}  else { 
+				if (workout[currentWorkout.index].alternating == "reps" && currentWorkout.side < 2) { // no reps, but we alternate sides still. 
+						console.log ("just finished one side, move to other side (alt:reps)")
+						setTimer(workout[currentWorkout.index].duration);
+						left_on.muted = false;
+						left_on.play();
+						currentWorkout.side++;
+						
+					} else {
+					// we are done with reps and or the exercise
+						console.log("done with reps or exercise");
+						if (workout[currentWorkout.index+1]) { 
+							currentWorkout.side = workout[currentWorkout.index+1].alternating ? 1 : 0;
+							currentWorkout.isTransitioning = true; 
+							currentWorkout.index ++;
+							end_interval.muted = false;
+							end_interval.play();
+							setTimer(restDuration);
+						}
+						else {
+							currentWorkout.isFinished = true;
+							start.play();
+						}
+					}
 			}
 
 		}
@@ -103,11 +358,16 @@
 
 
 <WorkoutList/>
-<button on:click={() => startWorkout()}> Start Workout </button>
+<button on:click={() => startWorkout(workout00)}> Start Workout Demo </button>
 
-
-
-<Dashboard>
+<button on:click={() => startWorkout(workout0)}> Start Workout 1 </button>
+<button on:click={() => startWorkout(workout1)}> Start Workout 2 </button>
+<button on:click={() => startWorkout(workout2)}> Start Workout 3 </button>
+<button on:click={() => startWorkout(workout3)}> Start Workout 4 </button>
+<Dashboard 
+	getReadyBG={(currentWorkout.index == 0 && currentWorkout.isTransitioning == true)}
+	hasNext = {(currentWorkout.index == 0 && currentWorkout.isTransitioning == true) || workout[currentWorkout.index+1]}
+	>
 	
 	<svelte:fragment slot="name">
 		{#if (currentWorkout.index == 0 && currentWorkout.isTransitioning == true)} 
@@ -117,28 +377,46 @@
 		{:else if (currentWorkout.index >= 0 && currentWorkout.isTransitioning == false)}
 			{workout[currentWorkout.index].name}
 	    {:else if (currentWorkout.index > 0 && currentWorkout.isTransitioning == true)}
-			rest
+			<span style="font-size:.5em;">Next up: {workout[currentWorkout.index].name}</span>
 		{/if} 
 	</svelte:fragment>
+
+	<svelte:fragment slot="left">
+		{#if (currentWorkout.side % 2 == 1 && currentWorkout.side != 0)}
+			Left
+		{/if} 
+	</svelte:fragment>
+	<svelte:fragment slot="right">
+		{#if (currentWorkout.side % 2 == 0 && currentWorkout.side != 0)}
+			Right
+		{/if}
+	</svelte:fragment>
+
 	<svelte:fragment slot="reps"> 
-		{#if (currentWorkout.index >= 0)} 
-			{#if (workout[currentWorkout.index].reps)}
-				{currentWorkout.rep} / {workout[currentWorkout.index].reps}
+		{#if (currentWorkout.index >= 0 && currentWorkout.isTransitioning == false)} 
+			{#if !(currentWorkout.isFinished) && (workout[currentWorkout.index].reps)}
+				{currentWorkout.rep}/{workout[currentWorkout.index].reps}
 			{/if}
 		{/if}
 	</svelte:fragment>
+
 	<svelte:fragment slot="go-rest"> 
 		{#if (currentWorkout.index >= 0)} 
-			{#if (workout[currentWorkout.index].reps && (currentWorkout.isTransitioning == false))}
+			{#if ((currentWorkout.isTransitioning == false))}
 				{#if currentWorkout.isResting} 
-					rest
+					<img alt="rest" src="/img/dog_rest.gif" width="60%"/>
+				{:else if currentWorkout.isFinished} 
+					<!--  -->
 				{:else}
-					go!
+					<img alt="go!" src="/img/dog_work.gif" width="60%"/>
 				{/if}
+			{:else} 
+				<img alt="rest" src="/img/dog_rest.gif" width="60%"/>
+
 			{/if}
 		{/if}
 	</svelte:fragment>
-	<svelte:fragment slot="timer">{currentWorkout.secondsRemaining ? currentWorkout.secondsRemaining : 0 }</svelte:fragment>
+	<svelte:fragment slot="timer">{currentWorkout.secondsRemaining ? currentWorkout.secondsRemaining : "🎉" }</svelte:fragment>
 	<svelte:fragment slot="next">
 		{#if (currentWorkout.index == 0 && currentWorkout.isTransitioning == true)} 
 			{workout[currentWorkout.index].name}

@@ -1,29 +1,34 @@
 <script>
+    export let getReadyBG;
+    export let hasNext;
 </script>
 
 
-<div class="wrapper"> 
+<div class="wrapper" class:getReadyBG > 
     <div class="bod">
-        <div class="name"><slot name="name">Upside down bugs</slot></div>
         <div class="side">
-            <div class="left">Left</div>
-            <div class="right">Right</div>
+            
+            <div class="left"><slot name="left"></slot></div>
+            <div class="right"><slot name="right"></slot></div>
         </div>
+        <div class="name"><slot name="name">Upside down bugs</slot></div>
+        <div class="reps"><slot name="reps">1 / 10</slot></div>
+
         <div class="timer"><slot name="timer">10</slot></div>
         <div class="go-rest"><slot name="go-rest">go!</slot></div>
-        <div class="reps"><slot name="reps">1 / 10</slot></div>
     </div>
     <div class="footer">
-        <div class="next">Next: <slot name="next">McGill curls</slot></div>
+        <div class="next" class:hasNext><slot name="next">McGill curls</slot></div>
     </div>
 </div>
 
 <style>
     .wrapper {
+        font-family:'Terminal Grotesque', sans-serif;
         font-size:16px;
         width: 360px;
         height: 640px;
-        background:lightblue;
+        background:#C1F6F0;
         display:flex;
         flex-direction:column;
         gap:4px;
@@ -31,10 +36,17 @@
     
         
     }
+    .getReadyBG {
+        background:#E9F0F0; 
+    }
+
+    .hasNext::before {
+        content:"Next: ";
+    }
     .wrapper .bod {
         display:flex;
         flex-direction:column;
-        justify-content:center;
+        /* justify-content:center; */
     }
     .wrapper .footer {
         display:flex;
@@ -57,8 +69,8 @@
     }
 
     .name {
-        font-size: 2.5em;
-        padding-top:2.5em;
+        font-size: 3em;
+        padding-top:2.25em;
         
     }
     .side {
@@ -75,13 +87,21 @@
         flex-grow:1;
     }
     .timer {
-        font-size:10em;
+        font-size:6.75em;
+        padding:0;
+        font-family: 'Compagnon', sans-serif;
+        font-weight:600;
+        margin-top:-.2em;
     }
     .go-rest {
-        padding: 1em 0;
+        padding-top:3.5em;
     }
     .reps {
-        font-size: 2em;
+        font-size: 1.5em;
+        font-family: 'Compagnon', sans-serif;
+        font-weight:600;
+        height:1.5em;
+        padding-top:.7em;
     }
     .next {
         width:100%;
