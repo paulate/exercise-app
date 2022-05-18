@@ -16,49 +16,60 @@
 	// todo: make sure "next up" shows right thing when resting
 	// todo: bug - sometimes resting shows 10/20 reps? 
 	let workout = [];
+	let workout01 = [{
+		name:'Pigeon Stretch',
+		duration:5,
+		reps:2,
+		alternating:"reps",
+	},{
+		name:'Leg Rocks',
+		duration:5,
+		reps:2,
+		alternating:"reps",
+	},]
 	let workout00 = [{
 		name:'Calf Stretch',
-		duration:2,
+		duration:25,
 		alternating:"reps",
 	},
 	{
 		name:'Forward Fold',
-		duration:2,
+		duration:30,
 	},
 	{
 		name:'IT Band Stretch',
-		duration:2,
+		duration:20,
 		alternating:"reps",
 	},
 	{
 		name:'Inner Thigh Stretch',
-		duration:2,
+		duration:20,
 		alternating:"reps",
 	},
-	// {
-	// 	name:'Pretzel Stretch',
-	// 	duration:2,
-	// 	alternating:"reps",
-	// },
-	// {
-	// 	name:'Neck Stretch',
-	// 	duration:2,
-	// },{
-	// 	name:'Leg Hold Stretch',
-	// 	duration:2,
-	// 	reps:2,
-	// 	alternating:"reps",
-	// },{
-	// 	name:'Pigeon Stretch',
-	// 	duration:2,
-	// 	reps:2,
-	// 	alternating:"reps",
-	// },{
-	// 	name:'Leg Rocks',
-	// 	duration:2,
-	// 	reps:10,
-	// 	alternating:"reps",
-	// },
+	{
+		name:'Pretzel Stretch',
+		duration:30,
+		alternating:"reps",
+	},
+	{
+		name:'Neck Stretch',
+		duration:30,
+	},{
+		name:'Leg Hold Stretch',
+		duration:20,
+		reps:2,
+		alternating:"reps",
+	},{
+		name:'Pigeon Stretch',
+		duration:20,
+		reps:2,
+		alternating:"reps",
+	},{
+		name:'Leg Rocks',
+		duration:5,
+		reps:10,
+		alternating:"reps",
+	},
 ]
 	let workout0 = [{
 		name: 'Get ur resistance bands',
@@ -298,16 +309,19 @@
 			if ((workout[currentWorkout.index].reps) && 
 			   (currentWorkout.rep < workout[currentWorkout.index].reps) &&
 			   (currentWorkout.isResting == false)) { // we just finished one rep
-					if (workout[currentWorkout.index].alternating == "reps") { //if there are reps and we alternate:rep...
+					if (workout[currentWorkout.index].alternating == "reps"  && currentWorkout.side < 2) { //if there are reps and we alternate:rep...
 						console.log ("just finished one rep, move to other side (alt:reps)")
-						setTimer(currentWorkout.restDuration);
+						setTimer(workout[currentWorkout.index].duration);
 						left_on.muted = false;
 						left_on.play();
 						currentWorkout.side++;
-						if (currentWorkout.side == 2) {
-							currentWorkout.isResting = true;
-						} 
-						console.log(currentWorkout.rep);
+					}  else if (workout[currentWorkout.index].alternating == "reps"  && currentWorkout.side == 2) {
+						console.log ("ok moved to other side?");
+						setTimer(workout[currentWorkout.index].duration);
+						left_on.muted = false;
+						left_on.play();
+						currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
+						currentWorkout.rep ++;
 					} else {
 						console.log("just finished one rep, move to resting");
 				   		setTimer(currentWorkout.restDuration);
@@ -358,7 +372,8 @@
 
 
 <WorkoutList/>
-<button on:click={() => startWorkout(workout00)}> Start Workout Demo </button>
+<button on:click={() => startWorkout(workout01)}> Start Workout Demo </button>
+<button on:click={() => startWorkout(workout00)}> Start Morning Stretch </button>
 
 <button on:click={() => startWorkout(workout0)}> Start Workout 1 </button>
 <button on:click={() => startWorkout(workout1)}> Start Workout 2 </button>
