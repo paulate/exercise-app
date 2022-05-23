@@ -16,16 +16,15 @@
 	// todo: make sure "next up" shows right thing when resting
 	// todo: bug - sometimes resting shows 10/20 reps? 
 	let workout = [];
-	let workout01 = [{
+	let workout01 = [
+		{
 		name:'Pigeon Stretch',
 		duration:5,
 		reps:2,
 		alternating:"reps",
 	},{
 		name:'Leg Rocks',
-		duration:5,
-		reps:2,
-		alternating:"reps",
+		duration:2,
 	},]
 	let workout00 = [{
 		name:'Calf Stretch',
@@ -276,6 +275,7 @@
 		workout = wo;
 		currentWorkout = {}
 		currentWorkout.restDuration = restDuration;
+		currentWorkout.duration = 0;
 		currentWorkout.index = 0;
 		currentWorkout.rep = 1;
 		currentWorkout.side = 0;
@@ -286,6 +286,7 @@
 
 	let timer;
 	function setTimer(seconds) {
+		console.log(1-(currentWorkout.secondsRemaining/workout[currentWorkout.index].duration))
 		currentWorkout.secondsRemaining = seconds;
 		timer = setInterval( function(){
 					currentWorkout.secondsRemaining -= 1;
@@ -303,6 +304,7 @@
 			currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
 			start_interval.muted = false;
 			start_interval.play();
+			currentWorkout.duration = workout[currentWorkout.index].duration;
 			setTimer(workout[currentWorkout.index].duration);
 		} else if (currentWorkout.isTransitioning == false) { // Just ended a rep or rest
 			console.log(currentWorkout.rep);
@@ -351,7 +353,7 @@
 					// we are done with reps and or the exercise
 						console.log("done with reps or exercise");
 						if (workout[currentWorkout.index+1]) { 
-							currentWorkout.side = workout[currentWorkout.index+1].alternating ? 1 : 0;
+							currentWorkout.side = 0;
 							currentWorkout.isTransitioning = true; 
 							currentWorkout.index ++;
 							end_interval.muted = false;
@@ -359,6 +361,7 @@
 							setTimer(restDuration);
 						}
 						else {
+							currentWorkout.side = 0;
 							currentWorkout.isFinished = true;
 							start.play();
 						}
@@ -379,8 +382,15 @@
 <button on:click={() => startWorkout(workout1)}> Start Workout 2 </button>
 <button on:click={() => startWorkout(workout2)}> Start Workout 3 </button>
 <button on:click={() => startWorkout(workout3)}> Start Workout 4 </button>
+
+<!-- 1- (currentWorkout.secondsRemaining/currentWorkout.duration) -->
+
 <Dashboard 
 	getReadyBG={(currentWorkout.index == 0 && currentWorkout.isTransitioning == true)}
+	rightBG={(currentWorkout.side % 2 == 0 && currentWorkout.side != 0)}
+	leftBG={(currentWorkout.side % 2 == 1 && currentWorkout.side != 0)}
+
+	
 	hasNext = {(currentWorkout.index == 0 && currentWorkout.isTransitioning == true) || workout[currentWorkout.index+1]}
 	>
 	
@@ -398,12 +408,12 @@
 
 	<svelte:fragment slot="left">
 		{#if (currentWorkout.side % 2 == 1 && currentWorkout.side != 0)}
-			Left
+			<img alt="left" src="/img/armR1.gif" width="60%"/>
 		{/if} 
 	</svelte:fragment>
 	<svelte:fragment slot="right">
 		{#if (currentWorkout.side % 2 == 0 && currentWorkout.side != 0)}
-			Right
+			<img alt="right" src="/img/armL.gif" width="60%"/>
 		{/if}
 	</svelte:fragment>
 
@@ -421,17 +431,20 @@
 				{#if currentWorkout.isResting} 
 					<img alt="rest" src="/img/dog_rest.gif" width="60%"/>
 				{:else if currentWorkout.isFinished} 
-					<!--  -->
+					<img alt="finished" src="/img/finished.gif" width="100%" style="margin-top:-2.5em"/>
 				{:else}
-					<img alt="go!" src="/img/dog_work.gif" width="60%"/>
+					<img alt="go!" src="/img/dog_work.gif" width="60%" style="margin-top:-1.2em"/>
 				{/if}
 			{:else} 
-				<img alt="rest" src="/img/dog_rest.gif" width="60%"/>
+				<img alt="rest" src="/img/dog_rest.gif" width="60%" style="margin-top:.5em"/>
 
 			{/if}
 		{/if}
 	</svelte:fragment>
-	<svelte:fragment slot="timer">{currentWorkout.secondsRemaining ? currentWorkout.secondsRemaining : "🎉" }</svelte:fragment>
+	<svelte:fragment slot="timeBG">
+		<div class="timeBG" style="width:{(1-((currentWorkout.secondsRemaining-1)/currentWorkout.duration))*100}%"></div>
+	</svelte:fragment>
+	<svelte:fragment slot="timer">{currentWorkout.secondsRemaining ? currentWorkout.secondsRemaining : "" }</svelte:fragment>
 	<svelte:fragment slot="next">
 		{#if (currentWorkout.index == 0 && currentWorkout.isTransitioning == true)} 
 			{workout[currentWorkout.index].name}
@@ -442,3 +455,14 @@
 
 	
 </Dashboard>
+<!-- give each workout its own timer bar and give it a duration -->
+<style>
+	.timeBG {
+        position:absolute;
+        height:100%;
+        background:#ffffffbf;
+        align-self:flex-start;
+        z-index:0;
+		transition:width 1s linear;
+    }
+</style>

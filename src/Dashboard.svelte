@@ -1,10 +1,14 @@
 <script>
     export let getReadyBG;
+    export let leftBG;
+    export let rightBG;
     export let hasNext;
+    
 </script>
 
 
-<div class="wrapper" class:getReadyBG > 
+<div class="wrapper" class:getReadyBG class:leftBG class:rightBG > 
+    
     <div class="bod">
         <div class="side">
             
@@ -20,10 +24,14 @@
     <div class="footer">
         <div class="next" class:hasNext><slot name="next">McGill curls</slot></div>
     </div>
+
+    <slot name="timeBG"><div class="timeBG"></div></slot>
+    <div class="dogLine"></div>
 </div>
 
 <style>
     .wrapper {
+        position:relative;
         font-family:'Terminal Grotesque', sans-serif;
         font-size:16px;
         width: 360px;
@@ -33,25 +41,40 @@
         flex-direction:column;
         gap:4px;
         align-items:center;
+    }
     
-        
+    .dogLine {
+        position:absolute;
+        top:81%;
+        height:8px;
+        width:80%;
+        background:#00000054;
+        border-radius: 5px;
+        z-index:1;
     }
     .getReadyBG {
         background:#E9F0F0; 
     }
 
+    .leftBG {
+        background: #F4FBD6;
+    }
+
+    .rightBG {
+        background: #FBD6D6;
+    }
     .hasNext::before {
         content:"Next: ";
     }
     .wrapper .bod {
-        display:flex;
         flex-direction:column;
+        width:100%;
         /* justify-content:center; */
     }
     .wrapper .footer {
-        display:flex;
         flex-direction:row;
         align-items:flex-end;
+        height:1em;
     }
 
 
@@ -59,11 +82,13 @@
         border:1px white solid;
         
     } */
-    .wrapper > div {
+    .wrapper .bod, .wrapper .footer {
         flex-grow:1;
         /* border:1px white solid; */
-        width:90%;
         text-align:center;
+        position:relative;
+        z-index:2;
+        display:flex;
 
         
     }
@@ -79,19 +104,21 @@
         flex-direction:row;
     }
     .side .left {
-        text-align:center;
+        text-align:left;
         flex-grow:1;
+        height:1em;
     }
     .side .right {
-        text-align:center;
+        text-align:right;
         flex-grow:1;
+        height:1em;
     }
     .timer {
         font-size:6.75em;
         padding:0;
         font-family: 'Compagnon', sans-serif;
         font-weight:600;
-        margin-top:-.2em;
+        margin-top:-.15em;
     }
     .go-rest {
         padding-top:3.5em;
@@ -105,6 +132,7 @@
     }
     .next {
         width:100%;
-        padding: 1em 0;
+        padding: .5em 0;
+        font-size:1.5em;
     }
 </style>
