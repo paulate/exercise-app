@@ -301,7 +301,6 @@
 
 	function advanceWorkout() {
 		if (currentWorkout.isTransitioning == true) { // End the Rest Transition
-			console.log(currentWorkout.timerIndex);
 			currentWorkout.isTransitioning = false;
 			currentWorkout.rep = 1;
 			currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
@@ -310,7 +309,6 @@
 			currentWorkout.duration = workout[currentWorkout.index].duration;
 			setTimer(workout[currentWorkout.index].duration);
 		} else if (currentWorkout.isTransitioning == false) { // Just ended a rep or rest
-			
 			if ((workout[currentWorkout.index].reps) && 
 			   (currentWorkout.rep < workout[currentWorkout.index].reps) &&
 			   (currentWorkout.isResting == false)) { // we just finished one rep
