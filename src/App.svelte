@@ -274,6 +274,7 @@
 
 		workout = wo;
 		currentWorkout = {}
+		currentWorkout.timerIndex=0;
 		currentWorkout.restDuration = restDuration;
 		currentWorkout.duration = 0;
 		currentWorkout.index = 0;
@@ -286,8 +287,9 @@
 
 	let timer;
 	function setTimer(seconds) {
-		console.log(1-(currentWorkout.secondsRemaining/workout[currentWorkout.index].duration))
+
 		currentWorkout.secondsRemaining = seconds;
+		currentWorkout.timerIndex ++;
 		timer = setInterval( function(){
 					currentWorkout.secondsRemaining -= 1;
 					if (currentWorkout.secondsRemaining == 0) {
@@ -299,6 +301,7 @@
 
 	function advanceWorkout() {
 		if (currentWorkout.isTransitioning == true) { // End the Rest Transition
+			console.log(currentWorkout.timerIndex);
 			currentWorkout.isTransitioning = false;
 			currentWorkout.rep = 1;
 			currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
@@ -307,7 +310,7 @@
 			currentWorkout.duration = workout[currentWorkout.index].duration;
 			setTimer(workout[currentWorkout.index].duration);
 		} else if (currentWorkout.isTransitioning == false) { // Just ended a rep or rest
-			console.log(currentWorkout.rep);
+			
 			if ((workout[currentWorkout.index].reps) && 
 			   (currentWorkout.rep < workout[currentWorkout.index].reps) &&
 			   (currentWorkout.isResting == false)) { // we just finished one rep
@@ -319,6 +322,8 @@
 						currentWorkout.side++;
 					}  else if (workout[currentWorkout.index].alternating == "reps"  && currentWorkout.side == 2) {
 						console.log ("ok moved to other side?");
+
+
 						setTimer(workout[currentWorkout.index].duration);
 						left_on.muted = false;
 						left_on.play();
@@ -335,6 +340,7 @@
 			   (currentWorkout.rep < workout[currentWorkout.index].reps) &&
 			   (currentWorkout.isResting == true)) { // we just finished resting and have more reps
 				console.log("just finished resting (or alternating rep) and have more reps");
+					
 					setTimer(workout[currentWorkout.index].duration);
 					left_on.muted = false;
 					left_on.play();
@@ -344,6 +350,7 @@
 			}  else { 
 				if (workout[currentWorkout.index].alternating == "reps" && currentWorkout.side < 2) { // no reps, but we alternate sides still. 
 						console.log ("just finished one side, move to other side (alt:reps)")
+						currentWorkout.duration = workout[currentWorkout.index].duration;
 						setTimer(workout[currentWorkout.index].duration);
 						left_on.muted = false;
 						left_on.play();
@@ -442,7 +449,14 @@
 		{/if}
 	</svelte:fragment>
 	<svelte:fragment slot="timeBG">
-		<div class="timeBG" style="width:{(1-((currentWorkout.secondsRemaining-1)/currentWorkout.duration))*100}%"></div>
+		<!-- 			
+			// are we at a workout?
+			// if so, set width to 100%
+			// and set transition time to duration. 
+			// if not, set width to 0? or don't do anything. ok  -->
+		<div class="timeBG" style="{
+			((currentWorkout.index >= 0 && currentWorkout.isTransitioning == false) ?
+			"width:100%; transition: width "+currentWorkout.duration+"s linear" : "") }"></div>
 	</svelte:fragment>
 	<svelte:fragment slot="timer">{currentWorkout.secondsRemaining ? currentWorkout.secondsRemaining : "" }</svelte:fragment>
 	<svelte:fragment slot="next">
@@ -456,13 +470,15 @@
 	
 </Dashboard>
 <!-- give each workout its own timer bar and give it a duration -->
+<!-- {currentWorkout.duration>0 ? currentWorkout.duration : 0}s -->
 <style>
 	.timeBG {
         position:absolute;
+		width:0%;
         height:100%;
         background:#ffffffbf;
         align-self:flex-start;
         z-index:0;
-		transition:width 1s linear;
+		/* transition:width 1s linear; */
     }
 </style>
