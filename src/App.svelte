@@ -287,7 +287,7 @@
 
 	let timer;
 	function setTimer(seconds) {
-
+		currentWorkout.duration = seconds;
 		currentWorkout.secondsRemaining = seconds;
 		currentWorkout.timerIndex ++;
 		timer = setInterval( function(){
@@ -306,7 +306,6 @@
 			currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
 			start_interval.muted = false;
 			start_interval.play();
-			currentWorkout.duration = workout[currentWorkout.index].duration;
 			setTimer(workout[currentWorkout.index].duration);
 		} else if (currentWorkout.isTransitioning == false) { // Just ended a rep or rest
 			if ((workout[currentWorkout.index].reps) && 
@@ -376,6 +375,19 @@
 		}
 	
 	}
+
+
+function timerSlide(node, {
+	delay = 0,
+	duration = 400
+	}) {
+
+	return {
+		delay,
+		duration,
+		css: t => `width: ${t * 100}`
+	};
+}
 </script>
 
 
@@ -446,15 +458,10 @@
 			{/if}
 		{/if}
 	</svelte:fragment>
-	<svelte:fragment slot="timeBG">
-		<!-- 			
-			// are we at a workout?
-			// if so, set width to 100%
-			// and set transition time to duration. 
-			// if not, set width to 0? or don't do anything. ok  -->
-		<div class="timeBG" style="{
-			((currentWorkout.index >= 0 && currentWorkout.isTransitioning == false) ?
-			"width:100%; transition: width "+currentWorkout.duration+"s linear" : "") }"></div>
+	<svelte:fragment slot="timeBG"> 	
+		{#if (currentWorkout.timerIndex)}
+		{#key currentWorkout.timerIndex}<div class="timeBG" id="{currentWorkout.timerIndex}" in:timerSlide={{duration:currentWorkout.duration*1000}}></div>{/key}
+		{/if}
 	</svelte:fragment>
 	<svelte:fragment slot="timer">{currentWorkout.secondsRemaining ? currentWorkout.secondsRemaining : "" }</svelte:fragment>
 	<svelte:fragment slot="next">
@@ -467,16 +474,14 @@
 
 	
 </Dashboard>
-<!-- give each workout its own timer bar and give it a duration -->
-<!-- {currentWorkout.duration>0 ? currentWorkout.duration : 0}s -->
+
 <style>
 	.timeBG {
         position:absolute;
-		width:0%;
+		width:100%;
         height:100%;
         background:#ffffffbf;
         align-self:flex-start;
         z-index:0;
-		/* transition:width 1s linear; */
     }
 </style>

@@ -4,24 +4,28 @@ Design stretching, exercise routines and then use them
 
 ## TODOS
 [ ] 14 letters / resize name based on length of name. 
-[ ] Get "sides" working: switchSides: "interval"
+[ ] pause/play
 [ ] Make routine picker/put workout data in a different place
-[x] Design UI graphics
+
 [ ] prevent screen from turning off?
 [ ] lock rotation? 
 [ ] bugs: audio not working in iOS
+[ ] skip/back
 
-[ ] pause
-[ ] skip
-[ ] time elapsed/time remaining
-[ ] background UI timer
-[ ] top UI timer (?)
+[x] background UI timer
 [x] finished graphics
+[x] Design UI graphics
  
 ## Nice to haves
+[ ] time elapsed/time remaining
+[ ] top UI timer (?)
+[ ] Get "sides" working: switchSides: "interval"
 [ ] Learn svelte native? - Get it on iOS 
 [ ] Make routine editor - yaml? 
-[ ] Pause, forward, backward
+
+## May 23
+- Finished background UI timer
+
 
  ## May 9
  - Just started implementing "sides" (alternating or interval) 
