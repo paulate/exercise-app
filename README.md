@@ -3,6 +3,8 @@ Design stretching, exercise routines and then use them
 
 
 ## TODOS
+[ ] Add Custom Rest time to exercise (will alternate between rep and rest) e.g. {name:... reps:... rest:... }
+[ ] Add rest time in between exercises e.g. {rest:10}
 [ ] 14 letters / resize name based on length of name. 
 [ ] pause/play
 [ ] Make routine picker/put workout data in a different place

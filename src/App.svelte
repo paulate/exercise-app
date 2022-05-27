@@ -16,16 +16,37 @@
 	// todo: make sure "next up" shows right thing when resting
 	// todo: bug - sometimes resting shows 10/20 reps? 
 	let workout = [];
-	let workout01 = [
-		{
-		name:'Pigeon Stretch',
+	let workout002 = [{
+		name:'Plank',
+		duration:5
+	},{
+		name:'Side Plank',
 		duration:5,
-		reps:2,
 		alternating:"reps",
 	},{
-		name:'Leg Rocks',
-		duration:2,
-	},]
+		name:'Crunches',
+		duration:5,
+		reps:2
+	},   ]
+	let workout01 = [
+		{
+		name:'Plank Walk',
+		duration:10,
+		reps:8,
+	},{
+		name:'Side Plank',
+		duration:10,
+		reps:8,
+	},{
+		name:'Other Side Plank',
+		duration:10,
+		reps:8,
+	},{
+		name:'Upside Down Bugs',
+		duration:8,
+		reps:10,
+		alternating:"reps"
+	}]
 	let workout00 = [{
 		name:'Calf Stretch',
 		duration:25,
@@ -64,9 +85,14 @@
 		reps:2,
 		alternating:"reps",
 	},{
-		name:'Leg Rocks',
+		name:'Leg Rocks 1',
 		duration:5,
-		reps:10,
+		reps:5,
+		alternating:"reps",
+	},{
+		name:'Leg Rocks 2',
+		duration:5,
+		reps:5,
 		alternating:"reps",
 	},
 ]
@@ -392,13 +418,15 @@ function timerSlide(node, {
 
 
 <WorkoutList/>
-<button on:click={() => startWorkout(workout01)}> Start Workout Demo </button>
-<button on:click={() => startWorkout(workout00)}> Start Morning Stretch </button>
+<button on:click={() => startWorkout(workout002)}> Start Workout Demo </button>
+<button on:click={() => startWorkout(workout01)}> Start Core Exercises</button>
 
+<button on:click={() => startWorkout(workout00)}> Start Morning Stretch </button>
+<!-- 
 <button on:click={() => startWorkout(workout0)}> Start Workout 1 </button>
 <button on:click={() => startWorkout(workout1)}> Start Workout 2 </button>
 <button on:click={() => startWorkout(workout2)}> Start Workout 3 </button>
-<button on:click={() => startWorkout(workout3)}> Start Workout 4 </button>
+<button on:click={() => startWorkout(workout3)}> Start Workout 4 </button> -->
 
 <!-- 1- (currentWorkout.secondsRemaining/currentWorkout.duration) -->
 
