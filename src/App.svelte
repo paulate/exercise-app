@@ -453,12 +453,12 @@ function timerSlide(node, {
 
 	<svelte:fragment slot="left">
 		{#if (currentWorkout.side % 2 == 1 && currentWorkout.side != 0)}
-			<img alt="left" src="/img/armR1.gif" width="60%"/>
+			<img alt="left" src="./img/armR1.gif" width="60%"/>
 		{/if} 
 	</svelte:fragment>
 	<svelte:fragment slot="right">
 		{#if (currentWorkout.side % 2 == 0 && currentWorkout.side != 0)}
-			<img alt="right" src="/img/armL.gif" width="60%"/>
+			<img alt="right" src="./img/armL.gif" width="60%"/>
 		{/if}
 	</svelte:fragment>
 
@@ -474,14 +474,14 @@ function timerSlide(node, {
 		{#if (currentWorkout.index >= 0)} 
 			{#if ((currentWorkout.isTransitioning == false))}
 				{#if currentWorkout.isResting} 
-					<img alt="rest" src="/img/dog_rest.gif" width="60%"/>
+					<img alt="rest" src="./img/dog_rest.gif" width="60%"/>
 				{:else if currentWorkout.isFinished} 
-					<img alt="finished" src="/img/finished.gif" width="100%" style="margin-top:-2.5em"/>
+					<img alt="finished" src="./img/finished.gif" width="100%" style="margin-top:-2.5em"/>
 				{:else}
-					<img alt="go!" src="/img/dog_work.gif" width="60%" style="margin-top:-1.2em"/>
+					<img alt="go!" src="./img/dog_work.gif" width="60%" style="margin-top:-1.2em"/>
 				{/if}
 			{:else} 
-				<img alt="rest" src="/img/dog_rest.gif" width="60%" style="margin-top:.5em"/>
+				<img alt="rest" src="./img/dog_rest.gif" width="60%" style="margin-top:.5em"/>
 
 			{/if}
 		{/if}
