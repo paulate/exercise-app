@@ -11,7 +11,7 @@ Design stretching, exercise routines and then use them
 
 [ ] prevent screen from turning off?
 [ ] lock rotation? 
-[ ] bugs: audio not working in iOS
+[ ] bugs: audio not working in iOS, safari. 
 [ ] skip/back
 
 [x] background UI timer

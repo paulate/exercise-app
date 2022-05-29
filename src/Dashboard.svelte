@@ -32,7 +32,7 @@
 <style>
     .wrapper {
         position:relative;
-        font-family:'Terminal Grotesque', sans-serif;
+        font-family:'terminal_grotesque', sans-serif;
         font-size:16px;
         width: 360px;
         height: 640px;
@@ -116,8 +116,8 @@
     .timer {
         font-size:6.75em;
         padding:0;
-        font-family: 'Compagnon', sans-serif;
-        font-weight:600;
+        font-family: 'compagnon', sans-serif;
+        font-weight:normal;
         margin-top:-.15em;
     }
     .go-rest {
@@ -125,8 +125,8 @@
     }
     .reps {
         font-size: 1.5em;
-        font-family: 'Compagnon', sans-serif;
-        font-weight:600;
+        font-family: 'compagnon', sans-serif;
+        font-weight:normal;
         height:1.5em;
         padding-top:.7em;
     }
