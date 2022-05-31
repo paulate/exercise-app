@@ -4,6 +4,7 @@
 
 	// SFX
 	//TODO: audio not working on ios
+
 	let start = new Audio('audio/start.wav'); // buffers automatically when created
 	let start_interval = new Audio('audio/start_interval.wav');
 	let end_interval = new Audio('audio/end_interval.wav');
@@ -13,7 +14,6 @@
 	
 	// Workout data
 	// todo: select workouts
-	// todo: make sure "next up" shows right thing when resting
 	// todo: bug - sometimes resting shows 10/20 reps? 
 	let workout = [];
 	let workout002 = [{
@@ -288,16 +288,8 @@
 
 	function startWorkout(wo){
 		start.play();
-		//audio hack to play sounds. 
-		start_interval.muted = true;  
-		end_interval.muted = true;
-		left_on.muted = true;
-		right_rest.muted = true;
-		start_interval.play();
-		end_interval.play();
-		left_on.play();
-		right_rest.play();
-
+		start = new Audio('audio/start.wav');
+		
 		workout = wo;
 		currentWorkout = {}
 		currentWorkout.timerIndex=0;
@@ -330,8 +322,10 @@
 			currentWorkout.isTransitioning = false;
 			currentWorkout.rep = 1;
 			currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
-			start_interval.muted = false;
+		
 			start_interval.play();
+			start_interval = new Audio('audio/start_interval.wav');
+
 			setTimer(workout[currentWorkout.index].duration);
 		} else if (currentWorkout.isTransitioning == false) { // Just ended a rep or rest
 			if ((workout[currentWorkout.index].reps) && 
@@ -340,23 +334,28 @@
 					if (workout[currentWorkout.index].alternating == "reps"  && currentWorkout.side < 2) { //if there are reps and we alternate:rep...
 						console.log ("just finished one rep, move to other side (alt:reps)")
 						setTimer(workout[currentWorkout.index].duration);
-						left_on.muted = false;
+						
 						left_on.play();
+						left_on = new Audio('audio/left_on.wav');
 						currentWorkout.side++;
 					}  else if (workout[currentWorkout.index].alternating == "reps"  && currentWorkout.side == 2) {
 						console.log ("ok moved to other side?");
 
 
 						setTimer(workout[currentWorkout.index].duration);
-						left_on.muted = false;
+						
 						left_on.play();
+						left_on = new Audio('audio/left_on.wav');
+
 						currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
 						currentWorkout.rep ++;
 					} else {
 						console.log("just finished one rep, move to resting");
 				   		setTimer(currentWorkout.restDuration);
-						right_rest.muted = false;
+						
 						right_rest.play();
+						right_rest = new Audio('audio/right_rest.wav');
+
 						currentWorkout.isResting = true;
 					}
 			} else if ((workout[currentWorkout.index].reps) && 
@@ -365,8 +364,10 @@
 				console.log("just finished resting (or alternating rep) and have more reps");
 					
 					setTimer(workout[currentWorkout.index].duration);
-					left_on.muted = false;
+					
 					left_on.play();
+					left_on = new Audio('audio/left_on.wav');
+
 					currentWorkout.isResting = false; 
 					currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
 					currentWorkout.rep ++;
@@ -375,8 +376,10 @@
 						console.log ("just finished one side, move to other side (alt:reps)")
 						currentWorkout.duration = workout[currentWorkout.index].duration;
 						setTimer(workout[currentWorkout.index].duration);
-						left_on.muted = false;
+						
 						left_on.play();
+						left_on = new Audio('audio/left_on.wav');
+
 						currentWorkout.side++;
 						
 					} else {
@@ -386,8 +389,10 @@
 							currentWorkout.side = 0;
 							currentWorkout.isTransitioning = true; 
 							currentWorkout.index ++;
-							end_interval.muted = false;
+							
 							end_interval.play();
+							end_interval = new Audio('audio/end_interval.wav');
+
 							setTimer(restDuration);
 						}
 						else {
