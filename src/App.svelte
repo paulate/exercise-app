@@ -17,7 +17,7 @@
 	// todo: bug - sometimes resting shows 10/20 reps? 
 	let workout = [];
 	let workout002 = [{
-		name:'Plank',
+		name:'Plank With Long Title',
 		duration:5
 	},{
 		name:'Side Plank',
@@ -450,7 +450,8 @@ function timerSlide(node, {
 		{:else if (currentWorkout.isFinished == true)}
 			You're done!
 		{:else if (currentWorkout.index >= 0 && currentWorkout.isTransitioning == false)}
-			{workout[currentWorkout.index].name}
+			<span style="font-size:{workout[currentWorkout.index].name.length > 14 ? 360/(24*workout[currentWorkout.index].name.length): 1}em;">{workout[currentWorkout.index].name}</span>
+			
 	    {:else if (currentWorkout.index > 0 && currentWorkout.isTransitioning == true)}
 			<span style="font-size:.5em;">Next up: {workout[currentWorkout.index].name}</span>
 		{/if} 
