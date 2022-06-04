@@ -289,6 +289,18 @@
 	function startWorkout(wo){
 		start.play();
 		start = new Audio('audio/start.wav');
+		start_interval.muted = true;  
+		end_interval.muted = true;
+		left_on.muted = true;
+		right_rest.muted = true;
+		start_interval.play();
+		end_interval.play();
+		left_on.play();
+		right_rest.play();
+		start_interval = new Audio('audio/start_interval.wav');
+		end_interval = new Audio('audio/end_interval.wav');
+		left_on = new Audio('audio/left_on.wav');
+		right_rest = new Audio('audio/right_rest.wav');
 		
 		workout = wo;
 		currentWorkout = {}
