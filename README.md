@@ -3,15 +3,16 @@ Design stretching, exercise routines and then use them
 
 
 ## TODOS
-[ ] Add Custom Rest time to exercise (will alternate between rep and rest) e.g. {name:... reps:... rest:... }
-[ ] Add rest time in between exercises e.g. {rest:10}
+[ ] learn about the webaudio api https://developer.mozilla.org/en-US/docs/Games/Techniques/Audio_for_Web_Games
 [x] 14 letters / resize name based on length of name. 
 [ ] Make routine picker/put workout data in a different place
 
-
-[x] bugs: audio not working in iOS, safari. 
+[ ] bugs: audio not working in iOS, safari. 
 [ ] pause/play
 [ ] skip/back
+
+[ ] Add Custom Rest time to exercise (will alternate between rep and rest) e.g. {name:... reps:... rest:... }
+[ ] Add rest time in between exercises e.g. {rest:10}
 
 [x] background UI timer
 [x] finished graphics

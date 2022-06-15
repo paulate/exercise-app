@@ -286,22 +286,25 @@
 		// up next, total reps, name <-- all derived from workout
 	}
 
+	function replay(sound) {
+		sound.pause();
+		sound.currentTime = 0;
+		return sound.play();
+	}
+
 	function startWorkout(wo){
 		start.play();
 		start = new Audio('audio/start.wav');
-		start_interval.muted = true;  
-		end_interval.muted = true;
-		left_on.muted = true;
-		right_rest.muted = true;
+		// start_interval.muted = true;  
+		// end_interval.muted = true;
+		// left_on.muted = true;
+		// right_rest.muted = true;
 		start_interval.play();
 		end_interval.play();
 		left_on.play();
 		right_rest.play();
-		start_interval = new Audio('audio/start_interval.wav');
-		end_interval = new Audio('audio/end_interval.wav');
-		left_on = new Audio('audio/left_on.wav');
-		right_rest = new Audio('audio/right_rest.wav');
-		
+		start_interval.pause();
+
 		workout = wo;
 		currentWorkout = {}
 		currentWorkout.timerIndex=0;
@@ -334,9 +337,26 @@
 			currentWorkout.isTransitioning = false;
 			currentWorkout.rep = 1;
 			currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
-		
-			start_interval.play();
-			start_interval = new Audio('audio/start_interval.wav');
+			
+			
+			let startPlayPromise = replay(start_interval);
+
+			if (startPlayPromise !== undefined) {
+			startPlayPromise.then(() => {
+				// Start whatever you need to do only after playback
+				// has begun.
+				currentWorkout.name = "it's cool"
+
+			}).catch(error => {
+				if (error.name === "NotAllowedError") {
+				currentWorkout.name = "error"
+				} else {
+					currentWorkout.name = "error1"
+				// Handle a load or playback error
+				}
+			});
+			}
+			// start_interval = new Audio('audio/start_interval.wav');
 
 			setTimer(workout[currentWorkout.index].duration);
 		} else if (currentWorkout.isTransitioning == false) { // Just ended a rep or rest
@@ -347,8 +367,8 @@
 						console.log ("just finished one rep, move to other side (alt:reps)")
 						setTimer(workout[currentWorkout.index].duration);
 						
-						left_on.play();
-						left_on = new Audio('audio/left_on.wav');
+						replay(left_on);
+						// left_on = new Audio('audio/left_on.wav');
 						currentWorkout.side++;
 					}  else if (workout[currentWorkout.index].alternating == "reps"  && currentWorkout.side == 2) {
 						console.log ("ok moved to other side?");
@@ -357,7 +377,7 @@
 						setTimer(workout[currentWorkout.index].duration);
 						
 						left_on.play();
-						left_on = new Audio('audio/left_on.wav');
+						// left_on = new Audio('audio/left_on.wav');
 
 						currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
 						currentWorkout.rep ++;
@@ -366,7 +386,7 @@
 				   		setTimer(currentWorkout.restDuration);
 						
 						right_rest.play();
-						right_rest = new Audio('audio/right_rest.wav');
+						// right_rest = new Audio('audio/right_rest.wav');
 
 						currentWorkout.isResting = true;
 					}
@@ -378,7 +398,7 @@
 					setTimer(workout[currentWorkout.index].duration);
 					
 					left_on.play();
-					left_on = new Audio('audio/left_on.wav');
+					// left_on = new Audio('audio/left_on.wav');
 
 					currentWorkout.isResting = false; 
 					currentWorkout.side = workout[currentWorkout.index].alternating ? 1 : 0;
@@ -390,7 +410,7 @@
 						setTimer(workout[currentWorkout.index].duration);
 						
 						left_on.play();
-						left_on = new Audio('audio/left_on.wav');
+						// left_on = new Audio('audio/left_on.wav');
 
 						currentWorkout.side++;
 						
@@ -403,7 +423,7 @@
 							currentWorkout.index ++;
 							
 							end_interval.play();
-							end_interval = new Audio('audio/end_interval.wav');
+							// end_interval = new Audio('audio/end_interval.wav');
 
 							setTimer(restDuration);
 						}
@@ -462,7 +482,7 @@ function timerSlide(node, {
 		{:else if (currentWorkout.isFinished == true)}
 			You're done!
 		{:else if (currentWorkout.index >= 0 && currentWorkout.isTransitioning == false)}
-			<span style="font-size:{workout[currentWorkout.index].name.length > 14 ? 360/(24*workout[currentWorkout.index].name.length): 1}em;">{workout[currentWorkout.index].name}</span>
+			<span style="font-size:{workout[currentWorkout.index].name.length > 14 ? 360/(24*workout[currentWorkout.index].name.length): 1}em;">{currentWorkout.name ? currentWorkout.name : workout[currentWorkout.index].name}</span>
 			
 	    {:else if (currentWorkout.index > 0 && currentWorkout.isTransitioning == true)}
 			<span style="font-size:.5em;">Next up: {workout[currentWorkout.index].name}</span>
@@ -512,7 +532,7 @@ function timerSlide(node, {
 	<svelte:fragment slot="timer">{currentWorkout.secondsRemaining ? currentWorkout.secondsRemaining : "" }</svelte:fragment>
 	<svelte:fragment slot="next">
 		{#if (currentWorkout.index == 0 && currentWorkout.isTransitioning == true)} 
-			{workout[currentWorkout.index].name}
+			{workout[currentWorkout.index+1].name}
 		{:else}
 			{ workout[currentWorkout.index+1] ? workout[currentWorkout.index+1].name : "" }
 		{/if}		
