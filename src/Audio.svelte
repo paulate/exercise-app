@@ -1,24 +1,20 @@
 <script context="module">
 
+export const comboAudio = document.createElement('audio');
+comboAudio.src = "audio/combo.wav";
+var stopTime = 0 
 
-  export var comboAudio = document.createElement('audio');
-  comboAudio.src = "audio/combo.wav";
-  var stopTime = 0 
+export function playSound(sample,startTime,sampleStopTime) {
+  sample.currentTime = startTime; //this.getAttribute("data-start");
+  stopTime = sampleStopTime;
+  sample.play();
+}
 
-  export function playSound(sample,startTime,sampleStopTime) {
-
-    sample.currentTime = startTime; //this.getAttribute("data-start");
-    stopTime = sampleStopTime;
-    sample.play();
-  }
-
-  comboAudio.addEventListener('timeupdate', function() {
-  
-  if (this.currentTime > stopTime) {
-    this.pause();
-  }
-}, false);
-
+comboAudio.addEventListener('timeupdate', function() {
+    if (this.currentTime > stopTime) {
+      this.pause();
+    }
+  }, false);
 
 </script>
 

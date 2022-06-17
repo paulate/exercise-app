@@ -5,8 +5,6 @@
 	export let interval = 1000;
 
 	onInterval(callback, interval);
-    
 
-    
 </script>
 

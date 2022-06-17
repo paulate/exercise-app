@@ -1,7 +1,13 @@
-<div id="nextUI" class="hasNext paused">IT Band Stretch</div>
+<script>
+    export let nextTitle;
+    export let isPlaying;
+    export let isEnded;
+</script>
+<div id="nextUI" class:hasNext={nextTitle ? true : false} class:paused={!(isPlaying || isEnded)} class:isEnded>
+        {nextTitle}
+</div>
+
 <style>
-
-
 #nextUI {
         font-size:1.3em;
         padding-top:1.3em;
@@ -16,11 +22,9 @@
         flex-direction:row;
         justify-content:center;
         gap:4px;
-
-    }
-   
-
-    .hasNext::before {
-        content:"Next: ";
-    }
+        height:1em;
+}
+.hasNext::before {
+    content:"Next: ";
+}
 </style>

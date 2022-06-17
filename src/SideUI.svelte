@@ -1,5 +1,12 @@
-<div id="sideUI" class="left">
-    <img src="img/armR1.gif" />
+<script>
+    export let side;
+</script>
+<div id="sideUI" class="{side}">
+    {#if side == "left"} 
+        <img alt ="left" src="img/armR1.gif"/>
+    {:else if side == "right"}
+        <img alt ="right" src="img/armL.gif"/>
+    {/if}
 </div>
 
 <style>
@@ -11,10 +18,10 @@
     z-index:3;
 }
 
-.left {
+:global(.left) {
     justify-content:left;
 }
-.right {
+:global(.right) {
     justify-content:right;
 }
 

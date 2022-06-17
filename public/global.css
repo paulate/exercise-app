@@ -94,3 +94,8 @@ button:focus {
 	color:rgba(0, 0, 0, 0.37);
 	background: rgba(0, 0, 0, 0.1) !important;
 }
+
+.isEnded {
+	background: #F4FBD6;
+
+}
