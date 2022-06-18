@@ -56,10 +56,15 @@ button:active {
     justify-content: space-around;
     align-items:center;
     position:relative;
+    width:100%;
     
 }
 .isNotEnded {
     z-index:3;
 }
-
+@media screen and (min-width: 500px) {
+        #controlsUI {
+            width:500px;
+        }
+    }
 </style>

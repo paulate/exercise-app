@@ -225,12 +225,20 @@ $: console.log(compiledWorkout);
         flex-direction:column;
         background:#fff;
         justify-content:center;
+        align-items:center;
+    
     }
     .blue {
         background: #C1F6F0;
     }
     .green {
         background: #F4FBD6;
+    }
+
+    @media screen and (min-width: 500px) {
+        #bottom {
+            width:500px;
+        }
     }
 </style>
 

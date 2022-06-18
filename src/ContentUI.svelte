@@ -34,7 +34,9 @@
         padding-top:4em;
         padding-bottom:6em;
         margin-top:-6em;   
-        background:#fff; 
+        background:#fff;    
+        width: calc(100% - 2em);
+        
 }
 .title {
     font-size:2.7em;
@@ -50,4 +52,9 @@
     margin-bottom:-.3em;
     
 }
+@media screen and (min-width: 500px) {
+        #contentUI {
+            width:calc(500px - 2em);
+        }
+    }
 </style>
