@@ -24,6 +24,11 @@
         gap:4px;
         height:1em;
 }
+
+div {
+    background:#fff;
+}
+
 .hasNext::before {
     content:"Next: ";
 }

@@ -3,7 +3,8 @@ Design stretching, exercise routines and then use them
 
 ## TODOS
 [ ] Change background color for exercise (green), left(green)/right(blue). 
-[ ] 14 letters / resize name based on length of name. 
+[x] 14 letters / resize name based on length of name. (fixed with current UI just centering stacked text) 
+[x] Favicon and title. 
 
 ---
 [x] learn about the webaudio api https://developer.mozilla.org/en-US/docs/Games/Techniques/Audio_for_Web_Games

@@ -33,10 +33,12 @@
         align-items:center;
         padding-top:4em;
         padding-bottom:6em;
-        margin-top:-6em;    
+        margin-top:-6em;   
+        background:#fff; 
 }
 .title {
     font-size:2.7em;
+    text-align:center;
 }
 .reps {
     font-size:1.3em;

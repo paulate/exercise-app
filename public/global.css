@@ -96,6 +96,6 @@ button:focus {
 }
 
 .isEnded {
-	background: #F4FBD6;
+	background: #F4FBD6 !important;
 
 }

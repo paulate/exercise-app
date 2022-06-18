@@ -166,7 +166,8 @@ $: console.log(compiledWorkout);
     <Timer callback={handleTickTimer} />
 {/if}
 
-<main> 
+<main class:green={(seek(compiledWorkout,timeElapsed).type == "exercise" || seek(compiledWorkout,timeElapsed).type == "exercise-left")}
+    class:blue={seek(compiledWorkout,timeElapsed).type == "exercise-right"}> 
     <div id="top">
         <TimerUI 
             timeElapsed={prettifyTime(timeElapsed)} 
@@ -222,7 +223,12 @@ $: console.log(compiledWorkout);
         background:#fff;
         justify-content:center;
     }
-
+    .blue {
+        background: #C1F6F0;
+    }
+    .green {
+        background: #F4FBD6;
+    }
 </style>
 
 

@@ -24,8 +24,8 @@
     margin-bottom:-2em;
 }
 :global(.end) {
-    margin-bottom:2.5em;
-    height:22em;
+    margin-bottom:2em;
+    height:19em;
     overflow:visible;
 }
 #dogUI img {
