@@ -1,11 +1,40 @@
 export const workoutData = [
    {
-    name:"Core Workout", data:[{
+    name:"Core Workout", data:[
+        {
+            name: 'Sun Salutations',
+            duration: 15,
+        },{
+            name: 'Plank Walk',
+            duration: 10,
+            reps:8,
+        },{
+            name: 'Sun Salutations',
+            duration: 15,
+        },{
+            name: 'Side Plank',
+            duration:10,
+            reps:8
+        },{
+            name: 'Sun Salutations',
+            duration: 15,
+        },{
+            name: 'Other Side Plank',
+            duration:10,
+            reps:8
+        },{
+            name: 'Upside Down Bugs',
+            duration:8,
+            alternating:"reps",
+            reps:10
+        },{
         name: 'Bicycles',
         duration: 60,
-        reps:5,}]
+        rest:10,
+        reps:5}
+    ]
     },
-    {name:"Test Workout", data:[{
+    {name:"Test Workout", rest:10, data:[{
     name: 'Forward Fold',
     duration: 3,
     alternating: "reps",
@@ -21,7 +50,7 @@ export const workoutData = [
     name:'Last one',
     duration: 5
 }
-]},{name:"Stretch Workout", data:[{
+]},{name:"Morning Stretch", data:[{
     name:'Calf Stretch',
     duration:25,
     alternating:"reps",

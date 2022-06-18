@@ -70,6 +70,9 @@ const handleTickTimer = () => {
     };
 
 function compileWorkout(workoutData) {
+    let workoutRest = workoutData.rest;
+    workoutData = workoutData.data;
+
     let compiledWorkout = {workoutData:[],totalDuration:0};
     addExercise(compiledWorkout,{type:"intro", name:"Get Ready!", duration:3, nextName:workoutData[0].name});
     
@@ -87,14 +90,14 @@ function compileWorkout(workoutData) {
             } else {
                 addExercise(compiledWorkout,{type:"exercise",...exercise}); 
                 if (rep < reps) {
-                    addExercise(compiledWorkout,{type:"exercise-rest",name:"Rest",nextName:exercise.nextName,rep:rep,reps:reps,duration:3})
+                    addExercise(compiledWorkout,{type:"exercise-rest",name:"Rest",nextName:exercise.nextName,rep:rep,reps:reps,duration:(exercise.rest ? exercise.rest : (workoutRest ? workoutRest : 3))})
                 };
             }
 
         }
 
         if (workoutData[i+1]){
-            addExercise(compiledWorkout,{type:"rest", name: "Rest", duration:3, nextName:workoutData[i+1].name});
+            addExercise(compiledWorkout,{type:"rest", name: "Rest", duration: (workoutRest ? workoutRest : 3), nextName:workoutData[i+1].name});
         } 
     }
     return compiledWorkout;
