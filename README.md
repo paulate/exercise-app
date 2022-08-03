@@ -1,6 +1,9 @@
 # workout app 
 Design stretching, exercise routines and then use them
 
+# run locally
+ HOST=0.0.0.0 npm run dev   
+
 ## TODOS
 [x] Add Custom Rest time to exercise (will alternate between rep and rest) e.g. {name:... reps:... rest:... }
 [x] Change background color for exercise (green), left(green)/right(blue). 

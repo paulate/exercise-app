@@ -33,7 +33,12 @@ export const workoutData = [
         rest:10,
         reps:5}
     ]
-    },
+    },{name:"HIT Run", data:[
+        {name:'warm up', duration:180},
+        {name:'sprint', duration:60, reps:8,rest:60},
+        {name:'warm down', duration:180}
+    ]}
+    ,
     {name:"Test Workout", rest:10, data:[{
     name: 'Forward Fold',
     duration: 3,
