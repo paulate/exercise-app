@@ -1,3 +1,7 @@
+// Data structure:  Array of objects, each object is a workout
+// Each workout object has a name and an array of objects, each object is an exercise
+// Each exercise object has a name and a duration, optional: reps and alternating
+
 export const workoutData = [
    {
     name:"Core Workout", data:[
@@ -39,23 +43,41 @@ export const workoutData = [
         {name:'warm down', duration:180}
     ]}
     ,
-    {name:"Test Workout", rest:10, data:[{
-    name: 'Forward Fold',
-    duration: 3,
-    alternating: "reps",
-    reps:2,
-},{name:'Neck Stretch',
-    duration:5,
+    {
+        name:"Wrist Trigger Point", 
+        rest:10, 
+        data:[
+            {
+            name: 'Trigger Arm Flex/Extend Palm Up',
+            duration: 5,
+            alternating:"reps",
+            reps:5
+            },
+            {  name: 'Trigger Arm Flex/Extend Palm Down',
+            duration: 5,
+            alternating:"reps",
+            reps:5
+            },
+]}, {
+    name:"Wrist Stretch",
+    data: [{name:'Forearm Flex Stretch',
+    duration:30,
+    alternating:"reps",
+    reps:2
+},
+{name:'Forearm Extend Stretch',
+    duration:30,
+    alternating:"reps",
+    reps:2
 },
 {
-    name: 'Stretch',
-    duration: 3,
+    name: 'Thumb stretch',
+    duration: 30,
+    alternating:"reps",
     reps:2
-}, {
-    name:'Last one',
-    duration: 5
+},]
 }
-]},{name:"Morning Stretch", data:[{
+,{name:"Morning Stretch", data:[{
     name:'Calf Stretch',
     duration:25,
     alternating:"reps",

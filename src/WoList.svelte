@@ -1,22 +1,59 @@
 <script>
     export let setWorkout;
     import {workoutData} from './workoutData.js';
- 
+    let editableWorkoutData = workoutData;
+
+    async function copyURLWithWorkout(editableWorkoutData) {
+        let currentUrl = new URL(window.location.href);
+        let hash = btoa(JSON.stringify(editableWorkoutData));
+        currentUrl.hash = hash;
+        try {
+            await navigator.clipboard.writeText(currentUrl.href);
+            console.log('Page URL copied to clipboard');
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    }
+
+    let readHash = function () {
+        let currentUrl = new URL(window.location.href);
+        if (currentUrl.hash) {
+            // console.log('hash found');
+            editableWorkoutData = JSON.parse(atob(currentUrl.hash.slice(1)));
+        }
+    }
+
+    let addWorkout = function () {
+        editableWorkoutData.push(dummyWorkoutData);
+    }
+    // dummy workout
+    let dummyWorkoutData =  {   
+        name: 'Test Workout',
+        data: [
+            {name: 'Pushups', duration: 30},
+            {name: 'Something else', duration: 10},
+        ]
+    }
+    //dummy hash url 
+    let dummyURL = "http://localhost:5000/#W3sibmFtZSI6IlRlc3QgV29ya291dCIsImRhdGEiOlt7Im5hbWUiOiJQdXNodXBzIiwiZHVyYXRpb24iOjMwfSx7Im5hbWUiOiJTb21ldGhpbmcgZWxzZSIsImR1cmF0aW9uIjoxMH1dfV0="
 </script>
-<main> 
+<svelte:window on:hashchange={readHash} />
+<main use:readHash>
     <div id="top">
         <div id="topBar"></div>
         <img src="img/dog_wo.png" alt="WO Dog"/>
     </div>
     
-        {#each workoutData as { name, data }, i}
+        {#each editableWorkoutData as { name, data }, i}
         <div class="workout-buttons">
-                <button class="workout" on:click={() => setWorkout(workoutData[i])}>{name}</button><button class="edit disabled"><img alt="edit" src="img/edit.svg"></button>
+                <button class="workout" on:click={() => setWorkout(editableWorkoutData[i])}>{name}</button><button class="edit disabled"><img alt="edit" src="img/edit.svg"></button>
         </div>
         {/each}
     
-    <button class="add disabled">+</button>
+    <button class="share" on:click={() => copyURLWithWorkout(editableWorkoutData)}><img src="img/share.svg" alt="share"/></button>
+    <button class="add" on:click{addWorkout}>+</button>
 </main>
+
 <style>
 #top {
     width:100%;
@@ -80,6 +117,16 @@ button {
     height: 1.5em;
     right:0;
 
+}
+
+.share {
+    position:absolute;
+    z-index:3;
+    bottom:0;
+    margin:.5em;
+    width:1.5em;
+    height: 1.5em;
+    left:0;
 }
 .workout {
     width:280px;
