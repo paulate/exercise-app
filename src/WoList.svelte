@@ -1,11 +1,11 @@
 <script>
-    export let setWorkout;
+    export let setWorkout, editWorkout;
     import {workoutData} from './workoutData.js';
-    let editableWorkoutData = workoutData;
 
-    async function copyURLWithWorkout(editableWorkoutData) {
+
+    async function copyURLWithWorkout(workoutData) {
         let currentUrl = new URL(window.location.href);
-        let hash = btoa(JSON.stringify(editableWorkoutData));
+        let hash = btoa(JSON.stringify(workoutData));
         currentUrl.hash = hash;
         try {
             await navigator.clipboard.writeText(currentUrl.href);
@@ -19,13 +19,11 @@
         let currentUrl = new URL(window.location.href);
         if (currentUrl.hash) {
             // console.log('hash found');
-            editableWorkoutData = JSON.parse(atob(currentUrl.hash.slice(1)));
+            workoutData.set(JSON.parse(atob(currentUrl.hash.slice(1))));
         }
     }
 
-    let addWorkout = function () {
-        editableWorkoutData.push(dummyWorkoutData);
-    }
+
     // dummy workout
     let dummyWorkoutData =  {   
         name: 'Test Workout',
@@ -44,14 +42,14 @@
         <img src="img/dog_wo.png" alt="WO Dog"/>
     </div>
     
-        {#each editableWorkoutData as { name, data }, i}
+        {#each $workoutData as { name, data }, i}
         <div class="workout-buttons">
-                <button class="workout" on:click={() => setWorkout(editableWorkoutData[i])}>{name}</button><button class="edit disabled"><img alt="edit" src="img/edit.svg"></button>
+                <button class="workout" on:click={() => setWorkout($workoutData[i])}>{name}</button><button class="edit" on:click={editWorkout($workoutData[i],i)}><img alt="edit" src="img/edit.svg"></button>
         </div>
         {/each}
     
-    <button class="share" on:click={() => copyURLWithWorkout(editableWorkoutData)}><img src="img/share.svg" alt="share"/></button>
-    <button class="add" on:click{addWorkout}>+</button>
+    <button class="share" on:click={() => copyURLWithWorkout($workoutData)}><img src="img/share.svg" alt="share"/></button>
+    <button class="add" on:click={editWorkout($workoutData[0])}>+</button>
 </main>
 
 <style>
@@ -109,7 +107,7 @@ button {
 
 }
 .add {
-    position:absolute;
+    position:fixed;
     z-index:3;
     bottom:0;
     margin:.5em;
@@ -120,7 +118,7 @@ button {
 }
 
 .share {
-    position:absolute;
+    position:fixed;
     z-index:3;
     bottom:0;
     margin:.5em;

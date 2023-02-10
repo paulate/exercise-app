@@ -8,6 +8,7 @@ Design stretching, exercise routines and then use them
 Feb 2023 
 
 [ ] Have workouts saved to URL /#base64workoutdata 
+[ ] Add an alert when you press the share button that it copied URL to clipboard
 ---
 [x] Add Custom Rest time to exercise (will alternate between rep and rest) e.g. {name:... reps:... rest:... }
 [x] Change background color for exercise (green), left(green)/right(blue). 
@@ -41,13 +42,15 @@ Feb 2023
 [x] top UI timer (?)
 [NO] Learn svelte native? 
 [x] Get it on iOS 
-## Feb 8
+## Feb 8 2023
 - Now I can take a hash from a URL and turn it into json data for a workout. 
 [x] In WoList, if there's a hash then use that as workoutData. Otherwise, use the .js file. 
 [x] Add share button and share default workout if no new workout. 
-[ ] create the ability to add workouts to editableworkoutdata. 
+[x] create the ability to add workouts to editableworkoutdata. 
 Current issue before I got too tired: I think instead of use:readhash I can use $ and mark "editableWorkoutData" as reactive. No, I can't, I need to read the hash in order to change editableWorkoutData and then I also need to use on:changehash to make sure the page reloads when I change the hash. But next steps are still to use $ to make editableWorkoutData reactive to when I add a new workout. 
-[ ] okay i think $: doesn't quite work the way I need it to. Try using stores.
+[x] okay i think $: doesn't quite work the way I need it to. Try using stores.
+[x] make a lil window open up when you press + and make a new workout with a json object 
+[ ] make a fuckin json schema editor for the edit page :< 
 
 ## Jun 17 
 - major refactor and refresh! with pause and prev/next. 

@@ -1,8 +1,11 @@
+import {writable} from 'svelte/store';
+
 // Data structure:  Array of objects, each object is a workout
 // Each workout object has a name and an array of objects, each object is an exercise
 // Each exercise object has a name and a duration, optional: reps and alternating
 
-export const workoutData = [
+
+export const workoutData = writable([
    {
     name:"Core Workout", data:[
         {
@@ -126,4 +129,4 @@ export const workoutData = [
     alternating:"reps",
 }]}
 
-]
+]);
