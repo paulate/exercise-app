@@ -1,16 +1,21 @@
+diff --git a/node_modules/@restspace/svelte-schema-form/SchemaForm.svelte b/node_modules/@restspace/svelte-schema-form/SchemaForm.svelte
+index 18510b2..5b99f51 100644
+--- a/node_modules/@restspace/svelte-schema-form/SchemaForm.svelte
++++ b/node_modules/@restspace/svelte-schema-form/SchemaForm.svelte
+@@ -17,7 +17,7 @@ import Upload from "./editors/Upload.svelte";
+ import TextArea from "./editors/TextArea.svelte";
+ import ArrayBlocks from "./editors/ArrayBlocks.svelte";
+ import Autocomplete from "./editors/Autocomplete.svelte";
+-import Hidden from "./editors/Hidden.svelte";
++import Hidden from "./editors/HIdden.svelte";
+ export let schema;
+ export let value;
+ export let uploadFiles = {};
 diff --git a/node_modules/@restspace/svelte-schema-form/css/basic-skin.css b/node_modules/@restspace/svelte-schema-form/css/basic-skin.css
-index d9c7f6f..685657f 100644
+index d9c7f6f..5b44814 100644
 --- a/node_modules/@restspace/svelte-schema-form/css/basic-skin.css
 +++ b/node_modules/@restspace/svelte-schema-form/css/basic-skin.css
-@@ -7,6 +7,7 @@ form.svelte-schema-form {
-   font-family: "Montserrat", sans-serif;
- }
- form.svelte-schema-form input {
-+  background-color:pink;
-   font-family: "Montserrat", sans-serif;
- }
- form.svelte-schema-form .collapser {
-@@ -169,5 +170,3 @@ form.svelte-schema-form .sf-autocomplete .sf-selected-item input {
+@@ -169,5 +169,3 @@ form.svelte-schema-form .sf-autocomplete .sf-selected-item input {
    margin-left: -3px;
    width: 100%;
  }
