@@ -1,19 +1,21 @@
 <script>
-    export let setWorkout, editWorkout;
+    export let setWorkout, editWorkout, updateURL;
     import {workoutData} from './workoutData.js';
 
-
-    async function copyURLWithWorkout(workoutData) {
-        let currentUrl = new URL(window.location.href);
-        let hash = btoa(JSON.stringify(workoutData));
-        currentUrl.hash = hash;
-        try {
-            await navigator.clipboard.writeText(currentUrl.href);
-            console.log('Page URL copied to clipboard');
-        } catch (err) {
-            console.error('Failed to copy: ', err);
-        }
-    }
+    
+    let copyURLWithWorkout = function(workoutData) {
+        let currentUrl = updateURL(workoutData);
+        navigator.clipboard.writeText(currentUrl.href).then(
+            () => {
+                /* clipboard successfully set */
+                console.log('Page URL copied to clipboard');
+                
+            },
+            () => {
+                /* clipboard write failed */
+            }
+            );
+    } 
 
     let readHash = function () {
         let currentUrl = new URL(window.location.href);
@@ -22,18 +24,6 @@
             workoutData.set(JSON.parse(atob(currentUrl.hash.slice(1))));
         }
     }
-
-
-    // dummy workout
-    let dummyWorkoutData =  {   
-        name: 'Test Workout',
-        data: [
-            {name: 'Pushups', duration: 30},
-            {name: 'Something else', duration: 10},
-        ]
-    }
-    //dummy hash url 
-    let dummyURL = "http://localhost:5000/#W3sibmFtZSI6IlRlc3QgV29ya291dCIsImRhdGEiOlt7Im5hbWUiOiJQdXNodXBzIiwiZHVyYXRpb24iOjMwfSx7Im5hbWUiOiJTb21ldGhpbmcgZWxzZSIsImR1cmF0aW9uIjoxMH1dfV0="
 </script>
 <svelte:window on:hashchange={readHash} />
 <main use:readHash>

@@ -1,0 +1,39 @@
+diff --git a/node_modules/@restspace/svelte-schema-form/css/basic-skin.css b/node_modules/@restspace/svelte-schema-form/css/basic-skin.css
+index d9c7f6f..685657f 100644
+--- a/node_modules/@restspace/svelte-schema-form/css/basic-skin.css
++++ b/node_modules/@restspace/svelte-schema-form/css/basic-skin.css
+@@ -7,6 +7,7 @@ form.svelte-schema-form {
+   font-family: "Montserrat", sans-serif;
+ }
+ form.svelte-schema-form input {
++  background-color:pink;
+   font-family: "Montserrat", sans-serif;
+ }
+ form.svelte-schema-form .collapser {
+@@ -169,5 +170,3 @@ form.svelte-schema-form .sf-autocomplete .sf-selected-item input {
+   margin-left: -3px;
+   width: 100%;
+ }
+-
+-/*# sourceMappingURL=basic-skin.css.map */
+diff --git a/node_modules/@restspace/svelte-schema-form/editors/Array.svelte b/node_modules/@restspace/svelte-schema-form/editors/Array.svelte
+index 307aae7..9c84d21 100644
+--- a/node_modules/@restspace/svelte-schema-form/editors/Array.svelte
++++ b/node_modules/@restspace/svelte-schema-form/editors/Array.svelte
+@@ -72,6 +72,7 @@ $: controls = schema.controls === undefined ? (readOnly ? '' : 'add, reorder, de
+ 	{#if collapserOpenState === "open"}
+ 		{#if !emptyText}
+ 			{#each value || [] as item, idx (idx)}
++			<div class="form-and-controls">
+ 			<svelte:component this={SubSchemaForm}
+ 				params={{
+ 					...params,
+@@ -96,7 +97,7 @@ $: controls = schema.controls === undefined ? (readOnly ? '' : 'add, reorder, de
+ 					<button type="button" class="list-control down" title="move down" on:click={onDown(idx)}></button>
+ 				{/if}
+ 			</div>
+-
++			</div>
+ 			{/each}
+ 		{:else}
+ 			<div class="emptyText">{emptyText}</div>

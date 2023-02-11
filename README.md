@@ -7,8 +7,10 @@ Design stretching, exercise routines and then use them
 ## TODOS
 Feb 2023 
 
-[ ] Have workouts saved to URL /#base64workoutdata 
+[x] Have workouts saved to URL /#base64workoutdata 
 [ ] Add an alert when you press the share button that it copied URL to clipboard
+[ ] edit screen: fix total time
+[ ] edit screen: make UI look more like figma UI 
 ---
 [x] Add Custom Rest time to exercise (will alternate between rep and rest) e.g. {name:... reps:... rest:... }
 [x] Change background color for exercise (green), left(green)/right(blue). 
@@ -50,7 +52,11 @@ Feb 2023
 Current issue before I got too tired: I think instead of use:readhash I can use $ and mark "editableWorkoutData" as reactive. No, I can't, I need to read the hash in order to change editableWorkoutData and then I also need to use on:changehash to make sure the page reloads when I change the hash. But next steps are still to use $ to make editableWorkoutData reactive to when I add a new workout. 
 [x] okay i think $: doesn't quite work the way I need it to. Try using stores.
 [x] make a lil window open up when you press + and make a new workout with a json object 
-[ ] make a fuckin json schema editor for the edit page :< 
+[x] make a json schema editor for the edit page :< haha no I just used a library thank you!
+[x] modify URL whenever workout is edited. 
+- used patch-package to edit the json schema editor
+- good enough editor for now.
+
 
 ## Jun 17 
 - major refactor and refresh! with pause and prev/next. 
