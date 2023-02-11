@@ -2,8 +2,8 @@
     export let clearWorkout, currentWorkout, workoutIndex;
     import {workoutData} from './workoutData.js';
 
-    console.log((currentWorkout));
     let editWorkout = function (currentWorkout, workoutIndex) {
+        //workoutIndex is optional - if it's undefined, we're adding a new workout
         workoutData.update((workoutData) => {
             if (typeof workoutIndex  === 'undefined') {
                 workoutData[workoutData.length] = currentWorkout;
@@ -14,17 +14,35 @@
         });
         clearWorkout();
     }
+
+    import { SubmitForm } from '@restspace/svelte-schema-form';
+    import './editForm.css';
+  
+    let schema = {
+        type: "object",
+        properties: {
+            "name": { "type": "string" },
+            "data": {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        "name": { "type": "string" },
+                        "duration": { "type": "number" },
+                        "reps": { "type": "number" },
+                        "alternating": { "type": "string" }
+                    }
+                }
+            }
+        }
+    };
+  
+    const submit = (e) => {
+        console.log(JSON.stringify(e.detail.value, undefined, 2));
+    }
 </script>
-<textarea id="name" bind:value={currentWorkout.name}></textarea>
-{#each currentWorkout.data as {name, duration}, i}
-    <div class="exercise">
-        <input type="text" bind:value={currentWorkout.data[i].name} />
-        <input type="number" bind:value={currentWorkout.data[i].duration} />
-        <input type="number" bind:value={currentWorkout.data[i].reps} />
-        <input type="text" bind:value={currentWorkout.data[i].alternating} />
-    </div>
-{/each}
-<!-- take data from inputs and generate a JSON workout object -->
+
+  <SubmitForm {schema} value={currentWorkout} on:submit={() => editWorkout(currentWorkout,workoutIndex)} />
 
 
-<button on:click={() => editWorkout(currentWorkout,workoutIndex)}> Save </button>
+
