@@ -5,6 +5,13 @@ Design stretching, exercise routines and then use them
  HOST=0.0.0.0 npm run dev   
 
 ## TODOS
+Aug 2024
+[ ] lots of icons missing in the create a workout section
+[ ] edit workout: the buttons in front cause you to be unable to click on the fields
+[ ] no feedback upon clicking share button
+[ ] create a new workout seemed like it didn't work the first time
+[ ] would be cool to group a bunch of different workout items and then replicate them or have a multiplier for groups
+---
 Feb 2023 
 
 [x] Have workouts saved to URL /#base64workoutdata 
